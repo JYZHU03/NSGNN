@@ -1,0 +1,71 @@
+out_dir: results
+metric_best: mae
+metric_agg: argmin
+dataset:
+  format: PowerGrid-size
+  name: tr100_teTexas
+  train_dataset: dataset100
+  test_dataset: Texas
+  task: graph
+  task_type: regression
+  transductive: False
+  node_encoder: True
+  node_encoder_name: TypeDictNode+RWSE
+  node_encoder_num_types: 28
+  node_encoder_bn: False
+  edge_encoder: False
+  edge_encoder_name: TypeDictEdge
+  edge_encoder_num_types: 10
+  edge_encoder_bn: False
+
+pretrained:
+  dir: ./results/TAGCN-F-tr100teTexas-NRWSE
+  reset_prediction_head: False
+  freeze_main: False
+
+posenc_RWSE:
+  enable: True
+  kernel:
+    times_func: range(2,6)
+  model: Linear
+  dim_pe: 3
+  raw_norm_type: BatchNorm
+
+train:
+  mode: inference-only
+  batch_size: 32
+  eval_period: 1
+  ckpt_period: 100
+model:
+  type: NSGNNModel
+  loss_fun: l1 #l1
+  edge_decoding: dot
+  graph_pooling: add
+nsgnn:
+  layer_type: TAGC
+  layers: 12
+  n_heads: 4
+  dim_hidden: 64
+  dropout: 0.3
+  layer_norm: False
+  batch_norm: True
+gnn:
+  head: inductive_NetSci_node
+  layers_pre_mp: 0
+  layers_post_mp: 8
+  dim_inner: 64
+  batchnorm: True
+  act: relu
+  dropout: 0.0
+  agg: sum #mean
+  normalize_adj: False
+  loss_self_head: None
+optim:
+  optimizer: adam
+  weight_decay: 1e-5 #0.0
+  base_lr: 0.0005
+  max_epoch: 500 #1000
+  scheduler: reduce_on_plateau
+  reduce_factor: 0.5
+  schedule_patience: 10
+  min_lr: 1e-5

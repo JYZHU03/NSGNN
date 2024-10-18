@@ -1,0 +1,92 @@
+out_dir: results
+metric_best: mae
+metric_agg: argmin
+
+dataset:
+  format: PowerGrid-size
+  name: tr20_teTexas
+  train_dataset: dataset20
+  test_dataset: Texas
+  task: graph
+  task_type: regression
+  transductive: False
+  node_encoder: True
+  node_encoder_name: TypeDictNode+NetSci #TypeDictNode+RWSE,TypeDictNode+GraphormerBias+RWSE， TypeDictNode+NetSci
+  node_encoder_num_types: 28 #28
+  node_encoder_bn: False
+  edge_encoder: False
+  edge_encoder_name: TypeDictEdge
+  edge_encoder_num_types: 10    #4
+  edge_encoder_bn: False
+
+Netsci_RWSE: #posenc_RWSE
+  enable: False
+  kernel:
+    times_func: range(2,6) #range(1,21),11不错
+  model: Linear #Transformer
+  dim_pe: 3  #3,28, the number of node types
+  raw_norm_type: BatchNorm
+
+Netsci_NetSci:
+  enable: True
+  model: Linear #Linear; mlp
+  dim_pe: 3  #the number of node types
+  raw_norm_type: BatchNorm
+#  number_metrics: 46
+  layers: 1 #6 for linear
+  SelectedMetrics: [9,10] #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
+
+Netsci_Graphlets:
+  enable: False
+  model: Linear
+  dim_pe: 50  #3,28, 40在120-130次的时候可以到达0.89
+  raw_norm_type: BatchNorm
+  layers: 1
+  SelectedMetrics: [6,7,8,9,10,11,12,13,14,15] #[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] #+dim_pe=40可以在训练120次后达到稳定的0.907
+
+train:
+  mode: custom
+  batch_size: 32
+  eval_period: 1
+  ckpt_period: 100
+model:
+  type: NSGNNModel
+  loss_fun: l1 #l1
+  edge_decoding: dot
+  graph_pooling: add
+nsgnn:
+  layer_type: TAGC  # CustomGatedGCN+Performer,GINE+Transformer，TAGC，BiasedTransformer
+  layers: 10  #10, 6 for 100totex
+  n_heads: 4
+  dim_hidden: 64  # `gt.dim_hidden` must match `gnn.dim_inner`
+  dropout: 0.3 #0.0 #0.3 good for 20toTexas （RWSE+MLP监督）
+  layer_norm: False
+  batch_norm: True
+gnn:
+  head: inductive_NetSci_node  #inductive_node #san_graph
+  layers_pre_mp: 0
+  layers_post_mp: 8  # Not used when `gnn.head: san_graph` 3
+  dim_inner: 64  # `gt.dim_hidden` must match `gnn.dim_inner`
+  batchnorm: True
+  act: relu
+  dropout: 0.0
+  agg: sum #mean
+  normalize_adj: False
+  loss_self_head: None
+optim:
+  optimizer: adam
+  weight_decay: 1e-5 #0.0
+  base_lr: 0.0005
+  max_epoch: 1000 #1000
+  scheduler: reduce_on_plateau
+  reduce_factor: 0.5
+  schedule_patience: 10
+  min_lr: 1e-5
+
+#    clip_grad_norm: True
+#    optimizer: adamW
+#    weight_decay: 1e-5
+#    base_lr: 0.001
+#    max_epoch: 2000
+#    scheduler: cosine_with_warmup
+#    num_warmup_epochs: 50
