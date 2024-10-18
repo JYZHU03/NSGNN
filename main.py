@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Process some integers.')
 
-    parser.add_argument('--cfg', dest='cfg_file', type=str, default='configs/NSGNN-F/SAGE-F-tr20teTexas-NetSci.yaml', #For_Testcode_TAGCN-F-tr20teTexas-NRWSE.yaml
+    parser.add_argument('--cfg', dest='cfg_file', type=str, default='configs/NSGNN-F/SAGE-F-tr20teTexas-NRWSE',
                         help='The configuration file path.')
     parser.add_argument('--repeat', type=int, default=1,
                         help='The number of repeated jobs.')
