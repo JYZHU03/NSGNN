@@ -50,7 +50,7 @@ python main.py --cfg configs/NSGNN-F/TAGCN-F-tr20teTexas-NRWSE.yaml
 python main.py --cfg tests/NSGNN-F/TAGCN-F-tr100teTexas-NRWSE-inference.yaml
 ```
 
-## Running NSGNN-S
+### Running NSGNN-S
 ```bash
 conda activate nsgnn
 # Running NSGNN-S with ARMA layer with random walk structural encoding
