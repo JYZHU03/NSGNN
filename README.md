@@ -40,8 +40,11 @@ Our datasets are available on the drive and will be downloaded automatically whe
 ```bash
 conda activate nsgnn
 
-# Running NSGNN-F with GraphSAGE layer and some combination of measures for training on dataset20 and testing on Texas.
-python main.py --cfg configs/NSGNN-F/SAGE-F-tr20teTexas-NetSci.yaml
+# Running NSGNN-F with GraphSAGE layer and random walk structural encoding for training on dataset20 and testing on Texas.
+python main.py --cfg configs/NSGNN-F/SAGE-F-tr20teTexas-NRWSE.yaml
+
+# Running NSGNN-F with TAGCN layer and the combination of measures encoding for training on dataset20 and testing on Texas.
+python main.py --cfg configs/NSGNN-F/TAGCN-F-tr20teTexas-NetSci.yaml
 
 # Running NSGNN-F with TAGCN layer and random walk structural encoding for training on dataset20 and testing on Texas.
 python main.py --cfg configs/NSGNN-F/TAGCN-F-tr20teTexas-NRWSE.yaml
@@ -55,6 +58,7 @@ python main.py --cfg tests/NSGNN-F/TAGCN-F-tr100teTexas-NRWSE-inference.yaml
 conda activate nsgnn
 # Running NSGNN-S with ARMA layer with random walk structural encoding
 python main.py --cfg configs/NSGNN-S/ARMA-S-tr100teTexas-NRWSE.yaml
+
 # Running NSGNN-S with TAGCN layer with random walk structural encoding
 python main.py --cfg configs/NSGNN-S/TAGCN-S-tr100teTexas-NRWSE.yaml
 ```
