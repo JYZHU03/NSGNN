@@ -11,10 +11,10 @@ Our findings reveal that prioritizing measures with consistent distributions acr
 In this *NSGNN* package we provide several Network Measure encodings and GNN model choices, implementing for both NSGNN-F and NSGNN-S. One can easily try our model with different GNN layer or different combination of network measures. NSGNN is built based on [PyG](https://www.pyg.org/), [GraphGym](https://pytorch-geometric.readthedocs.io/en/2.0.0/notes/graphgym.html) from PyG2, and [GraphGPS](https://github.com/rampasek/GraphGPS). We thank them for providing the codes and tools.
 Specifically *PyG v2.2* is required.
 
-### Summary of 48 Network Measures
+## Summary of 48 Network Measures
 Summary of 48 network measures evaluated, categorized into Nodal and Global types and indexed serially. Each entry includes measure names or definitions with relevant citations.
 
-#### Nodal
+### Nodal
 
 <table>
   <thead>
@@ -89,7 +89,7 @@ Summary of 48 network measures evaluated, categorized into Nodal and Global type
   </tbody>
 </table>
 
-#### Global
+### Global
 
 <table>
   <thead>
@@ -123,7 +123,7 @@ Summary of 48 network measures evaluated, categorized into Nodal and Global type
 </table>
 
 
-### Python environment setup with Conda
+## Python environment setup with Conda
 
 ```bash
 conda create -n nsgnn python=3.10
@@ -143,7 +143,7 @@ pip install ogb
 conda clean --all
 ```
 
-### Datasets
+## Datasets
 
 Our datasets are available on the drive and will be downloaded automatically when you execute our project. Our datasets including **dataset20**, **dataset100**, **Texas**, **Spain**, **Germany**, and **France** power grids.
 <table>
@@ -198,7 +198,7 @@ Our datasets are available on the drive and will be downloaded automatically whe
   </tbody>
 </table>
 
-### Running NSGNN-F
+## Running NSGNN-F
 ```bash
 conda activate nsgnn
 
@@ -215,7 +215,7 @@ python main.py --cfg configs/NSGNN-F/TAGCN-F-tr20teTexas-NRWSE.yaml
 python main.py --cfg tests/NSGNN-F/TAGCN-F-tr100teTexas-NRWSE-inference.yaml
 ```
 
-### Running NSGNN-S
+## Running NSGNN-S
 ```bash
 conda activate nsgnn
 # Running NSGNN-S with ARMA layer with random walk structural encoding
@@ -225,7 +225,7 @@ python main.py --cfg configs/NSGNN-S/ARMA-S-tr100teTexas-NRWSE.yaml
 python main.py --cfg configs/NSGNN-S/TAGCN-S-tr100teTexas-NRWSE.yaml
 ```
 
-### Expected performance
+## Expected performance
 
 Performance comparison of SNBS prediction methods, quantified by the $R^2$ score in %. The table highlights the top results with emojis:
 - 🥇 **First Place**
