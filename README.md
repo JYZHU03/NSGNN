@@ -16,7 +16,7 @@ Summary of 48 network measures evaluated, categorized into Nodal and Global type
 
 #### Nodal
 
-<table border="1" cellspacing="0" cellpadding="5">
+<table>
   <thead>
     <tr>
       <th>Name / Definition</th>
@@ -91,7 +91,7 @@ Summary of 48 network measures evaluated, categorized into Nodal and Global type
 
 #### Global
 
-<table border="1" cellspacing="0" cellpadding="5">
+<table>
   <thead>
     <tr>
       <th>Name / Definition</th>
