@@ -136,7 +136,6 @@ pip install pyg-lib -f https://data.pyg.org/whl/torch-1.13.0+cu117.html
 conda install openbabel fsspec rdkit -c conda-forge
 
 pip install pytorch-lightning yacs torchmetrics
-pip install performer-pytorch
 pip install tensorboardX
 pip install ogb
 
