@@ -197,6 +197,19 @@ Our datasets are available on the drive and will be downloaded automatically whe
   </tbody>
 </table>
 
+### 🔄 Data pre-processing 
+*(executed automatically by `master_loader.py` if `processed/` is absent).*
+
+| Step | What happens | Code entry-point |
+|------|--------------|------------------|
+| 1    | **Read raw files** (`grid_data_*.h5`, `snbs_*.h5`, 48-measure CSV, graphlet CSV) | — |
+| 2    | **Parse & align** node / edge tensors, SNBS labels, network measures, graphlets | `power_grid_data.py` |
+| 3    | **Build PyG `Data`** objects: `x = [P \| Netsci \| Graphlets]`, `edge_index`, `edge_attr`, `y` | `power_grid_data.py` |
+| 4    | **Create splits** and save `train.pt / valid.pt / test.pt` | `master_loader.py::join_dataset_splits` |
+
+Processed files land in datasets/Texas/processed/.
+After that, YAML config strores the dataset path and other parameters used by the model.
+
 ## Running NSGNN-F
 ```bash
 conda activate nsgnn
@@ -222,6 +235,28 @@ python main.py --cfg configs/NSGNN-S/ARMA-S-tr100teTexas-NRWSE.yaml
 
 # Running NSGNN-S with TAGCN layer with random walk structural encoding
 python main.py --cfg configs/NSGNN-S/TAGCN-S-tr100teTexas-NRWSE.yaml
+```
+
+## Hyperparameter Tuning 
+All experiment settings live in a single and readable **YAML** file (see
+`configs/NSGNN-F/TAGCN-F-tr20teTexas-NRWSE.yaml`, excerpt below).  
+Feel free to edit it and re-launch `main.py`.
+
+Key settings you may want to tune:
+
+| Group                      | Field | Description |
+|----------------------------|-------|-------------|
+| **Model depth / width**    | `nsgnn.layers` | number of GNN layers (e.g. 6 – 14) |
+|                            | `nsgnn.dim_hidden` | hidden dimension per layer |
+| **Regularization**         | `nsgnn.dropout` | feature-drop rate inside NSGNN |
+|                            | `gnn.dropout` | MLP head dropout |
+| **Optimiser**              | `optim.base_lr` | initial learning rate |
+|                            | `optim.weight_decay` | L2 penalty |
+| **Network-measure choice** | `Netsci_Graphlets.SelectedMetrics` | list of index IDs (0-47) to include; combine or ablate measures by editing this array |
+
+To run a minimal example (e.g., tr20→Texas, TAGCN-F), one can use the following command:
+```bash
+python main.py --cfg configs/NSGNN-F/TAGCN-F-tr20teTexas-NRWSE.yaml
 ```
 
 ## Expected performance
