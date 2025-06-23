@@ -197,7 +197,7 @@ Our datasets are available on the drive and will be downloaded automatically whe
   </tbody>
 </table>
 
-### 🔄 Data pre-processing 
+### Data pre-processing 
 *(executed automatically by `master_loader.py` if `processed/` is absent).*
 
 | Step | What happens | Code entry-point |
